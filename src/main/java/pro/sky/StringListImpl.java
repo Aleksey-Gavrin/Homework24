@@ -19,6 +19,10 @@ public class StringListImpl implements StringList {
         this.stringList = new String[initCapacity];
     }
 
+    public String[] getStringList() {
+        return stringList;
+    }
+
     private void validateItem(String item) {
         if (item == null) {
             throw new NullPointerItemException();
@@ -31,7 +35,7 @@ public class StringListImpl implements StringList {
         }
     }
 
-    private void extendList() {
+    public void extendList() {
         String[] extendedStringList = new String[currentSize + 5];
         System.arraycopy(stringList, 0, extendedStringList, 0, currentSize);
         stringList = extendedStringList;
@@ -81,8 +85,8 @@ public class StringListImpl implements StringList {
     @Override
     public boolean contains(String item) {
         validateItem(item);
-        for (String s : stringList) {
-            if (s.equals(item)) {
+        for (int i = 0; i < currentSize; i++) {
+            if (stringList[i].equals(item)) {
                 return true;
             }
         }
