@@ -78,6 +78,33 @@ class StringListImplTests {
     }
 
     @Test
+    void set_positive(){
+        testList.add(0, str1);
+        testList.add(1, str2);
+        testList.set(0, str3);
+        assertEquals(2, testList.size());
+        assertEquals("Test3", testList.get(0));
+    }
+
+    @Test
+    void set_negative_InvalidIndexInput(){
+        testList.add(str1);
+        testList.add(str2);
+        assertThrows(InvalidIndexInputException.class, () ->
+                testList.set(2, str3));
+        assertThrows(InvalidIndexInputException.class, () ->
+                testList.set(-1, str3));
+    }
+
+    @Test
+    void set_negative_NullPointerItem(){
+        testList.add(str1);
+        testList.add(str2);
+        assertThrows(NullPointerItemException.class, () ->
+                testList.set(0, null));
+    }
+
+    @Test
     void contains_positive(){
         testList.add(str1);
         assertTrue(testList.contains(str1));

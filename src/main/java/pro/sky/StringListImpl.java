@@ -46,9 +46,6 @@ public class StringListImpl implements StringList {
         validateItem(item);
         if (currentSize == stringList.length) {
             extendList();
-            stringList[currentSize] = item;
-            currentSize++;
-            return item;
         }
         stringList[currentSize] = item;
         currentSize++;
@@ -57,11 +54,11 @@ public class StringListImpl implements StringList {
 
     @Override
     public String add(int index, String item) {
-        validateItem(item);
         validateIndex(index);
         if (index == currentSize) {
             return add(item);
         }
+        validateItem(item);
         if (currentSize == stringList.length) {
             extendList();
         }
@@ -75,8 +72,8 @@ public class StringListImpl implements StringList {
     public String set(int index, String item) {
         validateItem(item);
         validateIndex(index);
-        if (currentSize == stringList.length) {
-            extendList();
+        if (index == currentSize) {
+            throw new InvalidIndexInputException();
         }
         stringList[index] = item;
         return item;
@@ -85,27 +82,18 @@ public class StringListImpl implements StringList {
     @Override
     public boolean contains(String item) {
         validateItem(item);
-        for (int i = 0; i < currentSize; i++) {
-            if (stringList[i].equals(item)) {
-                return true;
-            }
-        }
-        return false;
+        return indexOf(item) != -1;
     }
 
     @Override
     public String remove(String item) {
         validateItem(item);
-        for (int i = 0; i < currentSize; i++) {
-            if (stringList[i].equals(item)) {
-                stringList[i] = null;
-                System.arraycopy(stringList, i + 1, stringList, i, currentSize - i - 1);
-                stringList[currentSize - 1] = null;
-                currentSize--;
-                return item;
-            }
+        int index = indexOf(item);
+        if (index == -1) {
+            throw new ItemNotFoundException();
         }
-        throw new ItemNotFoundException();
+        remove(index);
+        return item;
     }
 
     @Override
@@ -114,12 +102,10 @@ public class StringListImpl implements StringList {
         if (index == currentSize) {
             throw new ItemNotFoundException();
         }
-        String temp = stringList[index];
-        stringList[index] = null;
+        String item = stringList[index];
         System.arraycopy(stringList, index + 1, stringList, index, currentSize - index - 1);
-        stringList[currentSize - 1] = null;
         currentSize--;
-        return temp;
+        return item;
     }
 
     @Override
@@ -158,15 +144,7 @@ public class StringListImpl implements StringList {
         if (otherList == null) {
             throw new NullPointerItemException();
         }
-        if (this.size() != otherList.size()) {
-            return false;
-        }
-        for (int i = 0; i < currentSize; i++) {
-            if (!stringList[i].equals(otherList.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.equals(this.toArray(), otherList.toArray());
     }
 
     @Override
@@ -181,9 +159,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public void clear() {
-        for (int i = 0; i < currentSize; i++) {
-            stringList[i] = null;
-        }
+        stringList = new String[10];
         currentSize = 0;
     }
 
