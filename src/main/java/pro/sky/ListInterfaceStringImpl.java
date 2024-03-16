@@ -6,16 +6,16 @@ import pro.sky.exceptions.NullPointerItemException;
 
 import java.util.Arrays;
 
-public class StringListImpl implements StringList {
+public class ListInterfaceStringImpl implements ListInterface<String> {
 
     private String[] stringList;
     private int currentSize;
 
-    public StringListImpl() {
+    public ListInterfaceStringImpl() {
         this.stringList = new String[10];
     }
 
-    public StringListImpl(int initCapacity) {
+    public ListInterfaceStringImpl(int initCapacity) {
         this.stringList = new String[initCapacity];
     }
 
@@ -140,7 +140,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(ListInterface<String> otherList) {
         if (otherList == null) {
             throw new NullPointerItemException();
         }

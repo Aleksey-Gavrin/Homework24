@@ -7,9 +7,9 @@ import pro.sky.exceptions.NullPointerItemException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StringListImplTests {
+class ListInterfaceStringImplTests {
 
-    StringListImpl testList = new StringListImpl(3);
+    ListInterfaceStringImpl testList = new ListInterfaceStringImpl(3);
 
     String str1 = "Test1";
     String str2 = "Test2";
@@ -228,7 +228,7 @@ class StringListImplTests {
         testList.add(str1);
         testList.add(str2);
         testList.add(str3);
-        StringListImpl testList2 = new StringListImpl(3);
+        ListInterfaceStringImpl testList2 = new ListInterfaceStringImpl(3);
         testList2.add(str1);
         testList2.add(str2);
         testList2.add(str3);
