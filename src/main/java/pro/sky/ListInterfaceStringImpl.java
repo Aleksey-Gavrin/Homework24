@@ -36,7 +36,7 @@ public class ListInterfaceStringImpl implements ListInterface<String> {
     }
 
     public void extendList() {
-        String[] extendedStringList = new String[currentSize + 5];
+        String[] extendedStringList = new String[currentSize * 3 / 2];
         System.arraycopy(stringList, 0, extendedStringList, 0, currentSize);
         stringList = extendedStringList;
     }

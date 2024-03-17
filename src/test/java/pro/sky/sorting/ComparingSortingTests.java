@@ -42,4 +42,12 @@ class ComparingSortingTests {
         ComparingSorting.insertSort(testingArrayCopy3);
         assertTrue(isSorted(testingArrayCopy3));
     }
+
+    @Test
+    void quickSortTest() {
+        Integer[] testingArrayCopy4;
+        testingArrayCopy4 = Arrays.copyOf(testingArray, testingArray.length);
+        ComparingSorting.quickSort(testingArrayCopy4, 0, testingArrayCopy4.length - 1);
+        assertTrue(isSorted(testingArrayCopy4));
+    }
 }

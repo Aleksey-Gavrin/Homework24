@@ -36,7 +36,7 @@ public class ListInterfaceIntegerImpl implements ListInterface<Integer> {
     }
 
     public void extendList() {
-        Integer[] extendedIntegerList = new Integer[currentSize + 5];
+        Integer[] extendedIntegerList = new Integer[currentSize * 3 / 2];
         System.arraycopy(integerList, 0, extendedIntegerList, 0, currentSize);
         integerList = extendedIntegerList;
     }
@@ -83,7 +83,7 @@ public class ListInterfaceIntegerImpl implements ListInterface<Integer> {
     public boolean contains(Integer item) {
         validateItem(item);
         Integer[] integerListCopy = Arrays.copyOf(integerList, currentSize);
-        selectionSort(integerListCopy);
+        quickSort(integerListCopy, 0, integerListCopy.length - 1);
         return binarySearch(integerListCopy, item);
     }
 
@@ -170,19 +170,27 @@ public class ListInterfaceIntegerImpl implements ListInterface<Integer> {
         return Arrays.copyOf(integerList, currentSize);
     }
 
-    public static void selectionSort(Integer[] arr) {
-        if (arr == null) {
-            throw new NullPointerItemException();
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
-        for (int i = 0; i < arr.length - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                if(arr[j] < arr[minElementIndex]) {
-                    minElementIndex = j;
-                }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swapElements(arr, i, j);
             }
-            swapElements(arr, i, minElementIndex);
         }
+        swapElements(arr, i + 1, end);
+        return i + 1;
     }
 
     public static void swapElements(Integer[] arr, int idx1, int idx2) {

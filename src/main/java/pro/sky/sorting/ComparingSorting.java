@@ -16,6 +16,7 @@ public class ComparingSorting {
         Integer[] unsortedCopy1 = Arrays.copyOf(unsorted, unsorted.length);
         Integer[] unsortedCopy2 = Arrays.copyOf(unsorted, unsorted.length);
         Integer[] unsortedCopy3 = Arrays.copyOf(unsorted, unsorted.length);
+        Integer[] unsortedCopy4 = Arrays.copyOf(unsorted, unsorted.length);
 
         Long start1 = System.currentTimeMillis();
         bubbleSort(unsortedCopy1);
@@ -31,6 +32,11 @@ public class ComparingSorting {
         insertSort(unsortedCopy3);
         Long finish3 = System.currentTimeMillis();
         System.out.println("Время сортировки массива вставкой: " + (finish3 - start3));
+
+        Long start4 = System.currentTimeMillis();
+        quickSort(unsortedCopy4, 0, unsortedCopy4.length - 1);
+        Long finish4 = System.currentTimeMillis();
+        System.out.println("Время быстрой сортировки массива: " + (finish4 - start4));
 
     }
 
@@ -72,5 +78,30 @@ public class ComparingSorting {
             }
             arr[j] = temp;
         }
+    }
+
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
     }
 }

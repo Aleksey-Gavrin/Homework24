@@ -22,7 +22,7 @@ class ListInterfaceIntegerImplTests {
     @Test
     void binarySearchTest() {
       Integer[] testListCopy = test.toArray();
-      ListInterfaceIntegerImpl.selectionSort(testListCopy);
+      ListInterfaceIntegerImpl.quickSort(testListCopy, 0, testListCopy.length - 1);
       assertTrue(ListInterfaceIntegerImpl.binarySearch(testListCopy, 0));
       assertTrue(ListInterfaceIntegerImpl.binarySearch(testListCopy, 4));
       assertTrue(ListInterfaceIntegerImpl.binarySearch(testListCopy, 3));
